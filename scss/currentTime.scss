@@ -1,0 +1,9 @@
+.currentTime {
+  position: absolute;
+  display: inline-block;
+  font-size: 10pt;
+  $padding: 14.25px;
+  width: 92.5px - $padding * 2;
+  height: 45px - $padding * 2;
+  padding: $padding;
+}

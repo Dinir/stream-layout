@@ -1,0 +1,33 @@
+.titleTexts {
+  padding-top: 0;
+  overflow: hidden; }
+  .titleTexts input {
+    display: block;
+    background: transparent;
+    padding: 0;
+    border: 0;
+    line-height: 1em;
+    width: 100%;
+    font-family: "Fira Code", monospace;
+    text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black; }
+    .titleTexts input.title {
+      color: #65849f;
+      font-weight: bold; }
+    .titleTexts input.object {
+      color: #496072;
+      font-family: "Fira Code Retina", monospace; }
+
+.titleTexts {
+  width: 397px;
+  height: 45px;
+  padding-top: 3px; }
+  .titleTexts input {
+    line-height: 1.2em; }
+    .titleTexts input.title {
+      font-size: 1em;
+      /* 14pt */ }
+    .titleTexts input.object {
+      font-size: 0.7857em;
+      /* 11pt */ }
+
+/*# sourceMappingURL=titleTexts.css.map */

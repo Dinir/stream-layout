@@ -1,0 +1,23 @@
+body {
+  background: transparent;
+  margin: 0;
+  font-family: "Fira Code", monospace;
+  font-size: 14pt;
+  color: #65849f; }
+
+.container {
+  width: 800px;
+  height: 450px;
+  overflow: hidden; }
+  .container.hori {
+    background-image: url("./../StreamLayoutPulsating.gif"); }
+  .container.vert {
+    background-image: url("./../StreamLayoutVerticalPulsating.gif"); }
+  .container.hori .currentTime {
+    top: 0;
+    left: 459.375px; }
+  .container.vert .currentTime {
+    top: 360px;
+    left: 0; }
+
+/*# sourceMappingURL=layout.css.map */

@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"file": "currentTime.css",
+	"sources": [
+		"../scss/currentTime.scss"
+	],
+	"names": [],
+	"mappings": "AAAA,AAAA,YAAY,CAAC;EACX,QAAQ,EAAE,QAAQ;EAClB,OAAO,EAAE,YAAY;EACrB,SAAS,EAAE,IAAI;EAEf,KAAK,EAAE,IAAqB;EAC5B,MAAM,EAAE,MAAmB;EAC3B,OAAO,EAHG,OAAO,GAIlB"
+}
