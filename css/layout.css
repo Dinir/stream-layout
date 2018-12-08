@@ -19,5 +19,7 @@ body {
   .container.vert .currentTime {
     top: 360px;
     left: 0; }
+  .container #chatBox {
+    top: 405px; }
 
 /*# sourceMappingURL=layout.css.map */
