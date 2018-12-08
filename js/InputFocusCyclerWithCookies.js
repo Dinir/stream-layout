@@ -1,16 +1,22 @@
 class InputFocusCyclerWithCookies extends InputFocusCycler {
   constructor(elems, keycode, maxWeeks = 1) {
     super(elems, keycode)
-    this.maxAge = `max-age=${60 * 60 * 24 * 7 * maxWeeks}; `
+    this.maxWeeks = maxWeeks
     this.loadInputs()
+  }
+  
+  get expiresOn() {
+    const theDate = new Date()
+    theDate.setDate(theDate.getDate() + this.maxWeeks * 7)
+    
+    return `expires=${theDate.toUTCString()}`
   }
   
   saveInputs() {
     this.elems.forEach(input => {
       document.cookie = `input-${input.className}=${input.value}`
     })
-    document.cookie = this.maxAge
-    document.cookie = 'samesite'
+    document.cookie = this.expiresOn
   }
   
   loadInputs() {
