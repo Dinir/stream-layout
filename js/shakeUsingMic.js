@@ -1,6 +1,6 @@
 const shakeConfig = {
   targetDom: null,
-  shakeThreshold: [65,75,85,95,105],
+  shakeThreshold: [85,93,101,109,117],
   shakeScale: 2,
   active: true
 }
@@ -71,10 +71,10 @@ const shaker = {
       navigator.getUserMedia({
           audio: true
         }, stream => {
-          audioContext = new AudioContext()
-          analyser = audioContext.createAnalyser()
-          microphone = audioContext.createMediaStreamSource(stream)
-          javascriptNode = audioContext.createScriptProcessor(2048, 1, 1)
+          const audioContext = new AudioContext()
+          const analyser = audioContext.createAnalyser()
+          const microphone = audioContext.createMediaStreamSource(stream)
+          const javascriptNode = audioContext.createScriptProcessor(2048, 1, 1)
     
           analyser.smoothingTimeConstant = 0.8
           analyser.fftSize = 1024
@@ -98,7 +98,14 @@ const shaker = {
             shaker.shakeCallback(Math.round(average))
           } // end fn stream
         }, err => {
-          document.write(`The following error occured: ${err.name}`)
+          if (err.name === 'NotAllowedError') {
+            document.write(
+              'your streaming software doesn\'t allow this webpage to access your mic.\n' +
+              'if you\'re using OBS, try running OBS with the flag `--enable-media-stream`?'
+            )
+          } else {
+            document.write(`The following error occured: ${err.name}`)
+          }
         })
     } else {
       document.write(`getUserMedia not supported`)
