@@ -35,12 +35,13 @@
 </script>
 
 <script src="./js/InputFocusCycler.js"></script>
+<script src="./js/InputFocusCyclerWithCookies.js"></script>
 <script>
   const inputArray = [
     document.querySelector('.titleTexts .title'),
     document.querySelector('.titleTexts .object')
   ]
-  const titleFocusCycler = new InputFocusCycler(inputArray, 13) // keycode 13 = ENTER
+  const titleFocusCycler = new InputFocusCyclerWithCookies(inputArray, 13) // keycode 13 = ENTER
   titleFocusCycler.applyCycling()
 </script>
 
