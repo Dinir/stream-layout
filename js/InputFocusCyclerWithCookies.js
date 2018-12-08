@@ -7,11 +7,10 @@ class InputFocusCyclerWithCookies extends InputFocusCycler {
   
   saveInputs() {
     this.elems.forEach(input => {
-      const cookieEntry =
-      `input-${input.className}=` +
-      `${input.value}; `
-      document.cookie = `${cookieEntry}${this.maxAge}samesite; `
+      document.cookie = `input-${input.className}=${input.value}`
     })
+    document.cookie = this.maxAge
+    document.cookie = 'samesite'
   }
   
   loadInputs() {
@@ -25,8 +24,11 @@ class InputFocusCyclerWithCookies extends InputFocusCycler {
     })
   }
   
-  setIndex(focusEvent) {
-    super.setIndex(focusEvent)
-    this.saveInputs()
+  applyCycling() {
+    super.applyCycling()
+    const that = this
+    this.elems.forEach(input => {
+      input.addEventListener('blur', that.saveInputs.bind(that))
+    })
   }
 }
