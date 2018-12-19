@@ -7,7 +7,7 @@ class ClockDisplay {
   
   updateTime(hours, minutes, seconds) {
     for (let i = 0; i < this.timeText.length; i++) {
-      if(!arguments[i]) continue
+      if (typeof arguments[i] === 'undefined') continue
       this.timeText[i] = ('0' + arguments[i]).substr(-2)
     }
     this.dom.innerHTML = this.time
