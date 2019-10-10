@@ -1,6 +1,6 @@
 const shakeConfig = {
   targetDom: null,
-  shakeThreshold: [85,93,101,109,117],
+  shakeThreshold: [88,96,104,112,120],
   shakeScale: 2,
   active: true
 }
@@ -94,7 +94,7 @@ const shaker = {
             }
     
             let average = values / length
-            
+            // console.log(average)
             shaker.shakeCallback(Math.round(average))
           } // end fn stream
         }, err => {
