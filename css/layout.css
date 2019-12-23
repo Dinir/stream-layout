@@ -11,9 +11,9 @@ body {
   height: 450px;
   overflow: hidden; }
   .container.hori {
-    background-image: url("./../StreamLayoutPulsating.gif"); }
+    background-image: url("./../StreamLayout.png"); }
   .container.vert {
-    background-image: url("./../StreamLayoutVerticalPulsating.gif"); }
+    background-image: url("./../StreamLayoutVertical.png"); }
   .container.hori .currentTime {
     top: 0;
     left: 459.375px; }
