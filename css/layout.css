@@ -20,6 +20,8 @@ body {
   .container.vert .currentTime {
     top: 360px;
     left: 77.75px; }
+  .container .currentTime {
+    display: none; }
   .container #chatBox {
     top: 405px; }
 
