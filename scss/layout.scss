@@ -7,19 +7,31 @@ body {
   font-size: 14pt;
   color: #65849f;
 }
+
+/* base positioning and background images */
 .container {
   width: 800px;
   height: 450px;
   overflow: hidden;
   
-  // background images
-  &.hori {
+  // for custom background
+  background-image: none;
+  
+  .layoutFrame {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  &.hori .layoutFrame {
     background-image: url("./../StreamLayout.png");
   }
-  &.vert {
+  &.vert .layoutFrame {
     background-image: url("./../StreamLayoutVertical.png");
   }
-  
+}
+
+/* source positions */
+.container {
   &.hori .currentTime {
     top: 0;
     left: 459.375px;
@@ -28,12 +40,42 @@ body {
     top: 360px;
     left: 77.75px;
   }
-  
   .currentTime {
-    display: none;
+    position: absolute;
+    display: inline-block;
+    font-size: 10pt;
+    $padding: 14.25px;
+    width: 92.5px - $padding * 2;
+    height: 45px - $padding * 2;
+    padding: $padding;
   }
   
   #chatBox {
+    position: absolute;
     top: 405px;
+    width: 800px;
+    height: 45px;
+    border: none;
   }
+  
+  .titleTexts {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 397px;
+    height: 45px;
+    padding-top: 3px;
+    input {
+      line-height: 1.2em;
+      &.title  { font-size: 1em; /* 14pt */ }
+      &.object { font-size: 0.7857em; /* 11pt */ }
+    }
+  }
+  
+}
+
+// extra setups
+.container {
+  // disabling currentTime by default
+  .currentTime { display: none; }
 }

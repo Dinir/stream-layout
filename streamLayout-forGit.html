@@ -6,25 +6,25 @@
   <meta charset="UTF-8">
   <link rel="stylesheet" href="./css/layout.css">
   <link rel="stylesheet" href="./css/titleTexts.css">
-  <!-- <link rel="stylesheet" href="./css/currentTime.css"> -->
-  <link rel="stylesheet" href="./css/chatBox.css">
 </head>
 
 <body>
-  <div class="container">
-    <div class="titleTexts">
-      <input class="title" type="text" placeholder="">
-      <input class="object" type="text" placeholder="">
-    </div>
-    <!-- <div class="currentTime"></div> -->
-    <iframe id="chatBox" src="WEB_CHAT_APP_ADDRESS"></iframe>
+<div class="container">
+  <div class="layoutFrame"></div>
+  <div class="titleTexts">
+    <input class="title" type="text" placeholder="">
+    <input class="object" type="text" placeholder="">
   </div>
+  <!-- <div class="currentTime"></div> -->
+  <div class="interactiveOptions"></div>
+  <iframe id="chatBox" src="WEB_CHAT_APP_ADDRESS"></iframe>
+</div>
 </body>
 
 <script src="./js/getQueryVariable.js"></script>
 <script>
   const scene = getQueryVariable('scene')
-
+  
   const layoutContainer = document.getElementsByClassName('container')[0]
   layoutContainer.setAttribute('class', `${layoutContainer.getAttribute('class')} ${scene}`)
 </script>

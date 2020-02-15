@@ -6,23 +6,62 @@ body {
   font-size: 14pt;
   color: #65849f; }
 
+/* base positioning and background images */
 .container {
   width: 800px;
   height: 450px;
-  overflow: hidden; }
-  .container.hori {
+  overflow: hidden;
+  background-image: none; }
+  .container .layoutFrame {
+    width: 100%;
+    height: 100%;
+    overflow: hidden; }
+  .container.hori .layoutFrame {
     background-image: url("./../StreamLayout.png"); }
-  .container.vert {
+  .container.vert .layoutFrame {
     background-image: url("./../StreamLayoutVertical.png"); }
-  .container.hori .currentTime {
-    top: 0;
-    left: 459.375px; }
-  .container.vert .currentTime {
-    top: 360px;
-    left: 77.75px; }
-  .container .currentTime {
-    display: none; }
-  .container #chatBox {
-    top: 405px; }
+
+/* source positions */
+.container.hori .currentTime {
+  top: 0;
+  left: 459.375px; }
+
+.container.vert .currentTime {
+  top: 360px;
+  left: 77.75px; }
+
+.container .currentTime {
+  position: absolute;
+  display: inline-block;
+  font-size: 10pt;
+  width: 64px;
+  height: 16.5px;
+  padding: 14.25px; }
+
+.container #chatBox {
+  position: absolute;
+  top: 405px;
+  width: 800px;
+  height: 45px;
+  border: none; }
+
+.container .titleTexts {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 397px;
+  height: 45px;
+  padding-top: 3px; }
+  .container .titleTexts input {
+    line-height: 1.2em; }
+    .container .titleTexts input.title {
+      font-size: 1em;
+      /* 14pt */ }
+    .container .titleTexts input.object {
+      font-size: 0.7857em;
+      /* 11pt */ }
+
+.container .currentTime {
+  display: none; }
 
 /*# sourceMappingURL=layout.css.map */

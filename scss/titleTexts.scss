@@ -1,5 +1,4 @@
 .titleTexts {
-  padding-top: 0;
   overflow: hidden;
   input {
     display: block;
@@ -22,21 +21,6 @@
     &.object {
       color: #496072;
       font-family: "Fira Code Retina", monospace;
-    }
-  }
-}
-
-.titleTexts {
-  width: 397px;
-  height: 45px;
-  padding-top: 3px;
-  input {
-    line-height: 1.2em;
-    &.title {
-      font-size: 1em; /* 14pt */
-    }
-    &.object {
-      font-size: 0.7857em; /* 11pt */
     }
   }
 }
