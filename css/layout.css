@@ -1,3 +1,4 @@
+/* consistent values */
 body {
   background: transparent;
   margin: 0;
@@ -7,30 +8,30 @@ body {
   color: #65849f; }
 
 /* base positioning and background images */
-.container {
+#container {
   width: 800px;
   height: 450px;
   overflow: hidden;
   background-image: none; }
-  .container .layoutFrame {
+  #container #layoutFrame {
     width: 100%;
     height: 100%;
     overflow: hidden; }
-  .container.hori .layoutFrame {
+  #container.hori #layoutFrame {
     background-image: url("./../StreamLayout.png"); }
-  .container.vert .layoutFrame {
+  #container.vert #layoutFrame {
     background-image: url("./../StreamLayoutVertical.png"); }
 
 /* source positions */
-.container.hori .currentTime {
+#container #titleTexts {
+  position: absolute;
   top: 0;
-  left: 459.375px; }
+  left: 0;
+  width: 397px;
+  height: 45px;
+  padding-top: 3px; }
 
-.container.vert .currentTime {
-  top: 360px;
-  left: 77.75px; }
-
-.container .currentTime {
+#container #currentTime {
   position: absolute;
   display: inline-block;
   font-size: 10pt;
@@ -38,30 +39,60 @@ body {
   height: 16.5px;
   padding: 14.25px; }
 
-.container #chatBox {
+#container.hori #currentTime {
+  top: 0;
+  left: 459.375px; }
+
+#container.vert #currentTime {
+  top: 360px;
+  left: 77.75px; }
+
+#container #interactiveOptions {
+  position: absolute; }
+
+#container.hori #interactiveOptions {
+  top: 45px;
+  width: 640px;
+  height: 360px; }
+
+#container.vert #interactiveOptions {
+  left: 248px;
+  width: 304px;
+  height: 405px; }
+
+#container #sideArea {
+  position: absolute;
+  width: 160px;
+  height: 360px; }
+
+#container.hori #sideArea {
+  top: 45px;
+  left: 640px; }
+
+#container.vert #sideArea {
+  top: 45px;
+  left: 596px; }
+
+#container #sideArea #sideImage {
+  width: 100%;
+  height: 120px;
+  display: block; }
+
+#container #sideArea label {
+  display: none; }
+
+#container #sideArea #sideText {
+  width: 100%;
+  height: 240px; }
+
+#container #chatBox {
   position: absolute;
   top: 405px;
   width: 800px;
   height: 45px;
   border: none; }
 
-.container .titleTexts {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 397px;
-  height: 45px;
-  padding-top: 3px; }
-  .container .titleTexts input {
-    line-height: 1.2em; }
-    .container .titleTexts input.title {
-      font-size: 1em;
-      /* 14pt */ }
-    .container .titleTexts input.object {
-      font-size: 0.7857em;
-      /* 11pt */ }
-
-.container .currentTime {
+#container #currentTime {
   display: none; }
 
 /*# sourceMappingURL=layout.css.map */

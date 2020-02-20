@@ -6,17 +6,23 @@
   <meta charset="UTF-8">
   <link rel="stylesheet" href="./css/layout.css">
   <link rel="stylesheet" href="./css/titleTexts.css">
+  <link rel="stylesheet" href="./css/sideArea.css">
 </head>
 
 <body>
-<div class="container">
-  <div class="layoutFrame"></div>
-  <div class="titleTexts">
+<div id="container">
+  <div id="layoutFrame"></div>
+  <div id="titleTexts">
     <input class="title" type="text" placeholder="">
     <input class="object" type="text" placeholder="">
   </div>
   <!-- <div class="currentTime"></div> -->
-  <div class="interactiveOptions"></div>
+  <div id="interactiveOptions"></div>
+  <div id="sideArea">
+    <img id="sideImage" src="" alt="Side Image Area">
+    <label for="sideText">Side Text Area</label>
+    <textarea id="sideText"></textarea>
+  </div>
   <iframe id="chatBox" src="WEB_CHAT_APP_ADDRESS"></iframe>
 </div>
 </body>
@@ -25,8 +31,8 @@
 <script>
   const scene = getQueryVariable('scene')
   
-  const layoutContainer = document.getElementsByClassName('container')[0]
-  layoutContainer.setAttribute('class', `${layoutContainer.getAttribute('class')} ${scene}`)
+  const layoutContainer = document.getElementById('container')
+  layoutContainer.setAttribute('class', scene)
 </script>
 
 <script src="./js/shakeUsingMic.js"></script>
@@ -38,8 +44,8 @@
 <script src="./js/InputFocusCyclerWithStorage.js"></script>
 <script>
   const inputArray = [
-    document.querySelector('.titleTexts .title'),
-    document.querySelector('.titleTexts .object')
+    document.querySelector('#titleTexts .title'),
+    document.querySelector('#titleTexts .object')
   ]
   const titleFocusCycler = new InputFocusCyclerWithStorage(inputArray, 13) // keycode 13 = ENTER
   titleFocusCycler.applyCycling()
@@ -49,7 +55,7 @@
 <script src="./js/CurrentTimeDisplay.js"></script>
 <script>
   const clockSettings = {
-    'dom': document.getElementsByClassName('currentTime')[0],
+    'dom': document.getElementById('currentTime'),
     'separator': ':',
     'updateInterval': 250
   }

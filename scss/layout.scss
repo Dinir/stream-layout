@@ -1,3 +1,9 @@
+/* consistent values */
+$lineAreaHeight: 45px;
+$mainAreaWidth: 640px;
+$mainAreaHeight: 360px;
+$sideAreaWidth: 160px;
+
 body {
   background: transparent;
   margin: 0;
@@ -9,7 +15,7 @@ body {
 }
 
 /* base positioning and background images */
-.container {
+#container {
   width: 800px;
   height: 450px;
   overflow: hidden;
@@ -17,30 +23,31 @@ body {
   // for custom background
   background-image: none;
   
-  .layoutFrame {
+  #layoutFrame {
     width: 100%;
     height: 100%;
     overflow: hidden;
   }
-  &.hori .layoutFrame {
+  &.hori #layoutFrame {
     background-image: url("./../StreamLayout.png");
   }
-  &.vert .layoutFrame {
+  &.vert #layoutFrame {
     background-image: url("./../StreamLayoutVertical.png");
   }
 }
 
 /* source positions */
-.container {
-  &.hori .currentTime {
+#container {
+  #titleTexts {
+    position: absolute;
     top: 0;
-    left: 459.375px;
+    left: 0;
+    width: 397px;
+    height: $lineAreaHeight;
+    padding-top: 3px;
   }
-  &.vert .currentTime {
-    top: 360px;
-    left: 77.75px;
-  }
-  .currentTime {
+  
+  #currentTime {
     position: absolute;
     display: inline-block;
     font-size: 10pt;
@@ -49,33 +56,67 @@ body {
     height: 45px - $padding * 2;
     padding: $padding;
   }
+  &.hori #currentTime {
+    top: 0;
+    left: 459.375px;
+  }
+  &.vert #currentTime {
+    top: 360px;
+    left: 77.75px;
+  }
+  
+  #interactiveOptions {
+    position: absolute;
+  }
+  &.hori #interactiveOptions {
+    top: $lineAreaHeight;
+    width: $mainAreaWidth;
+    height: $mainAreaHeight;
+  }
+  &.vert #interactiveOptions {
+    left: 248px;
+    width: 304px;
+    height: 405px;
+  }
+  
+  #sideArea {
+    position: absolute;
+    width: $sideAreaWidth;
+    height: $mainAreaHeight;
+  }
+  &.hori #sideArea {
+    top: $lineAreaHeight;
+    left: $mainAreaWidth;
+  }
+  &.vert #sideArea {
+    top: $lineAreaHeight;
+    left: 596px;
+  }
+  #sideArea {
+    #sideImage {
+      width: 100%;
+      height: $sideAreaWidth * 0.75;
+      display: block;
+    }
+    label { display: none; }
+    #sideText {
+      width: 100%;
+      height: $mainAreaHeight - ( $sideAreaWidth * 0.75 );
+    }
+  }
   
   #chatBox {
     position: absolute;
-    top: 405px;
+    top: $lineAreaHeight + $mainAreaHeight;
     width: 800px;
-    height: 45px;
+    height: $lineAreaHeight;
     border: none;
-  }
-  
-  .titleTexts {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 397px;
-    height: 45px;
-    padding-top: 3px;
-    input {
-      line-height: 1.2em;
-      &.title  { font-size: 1em; /* 14pt */ }
-      &.object { font-size: 0.7857em; /* 11pt */ }
-    }
   }
   
 }
 
 // extra setups
-.container {
+#container {
   // disabling currentTime by default
-  .currentTime { display: none; }
+  #currentTime { display: none; }
 }
