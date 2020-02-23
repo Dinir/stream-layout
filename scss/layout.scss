@@ -102,6 +102,7 @@ body {
     #sideText {
       width: 100%;
       height: $mainAreaHeight - ( $sideAreaWidth * 0.75 );
+      resize: none;
     }
   }
   
