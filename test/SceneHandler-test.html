@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<script src="../js/SceneHandler.js"></script>
+<script>
+  // Array comparison function from https://stackoverflow.com/a/14853974
+  // Warn if overriding existing method
+  if(Array.prototype.equals)
+    console.warn("Overriding existing Array.prototype.equals. Possible causes: New API defines the method, there's a framework conflict or you've got double inclusions in your code.");
+  // attach the .equals method to Array's prototype to call it on any array
+  Array.prototype.equals = function (array) {
+    // if the other array is a falsy value, return
+    if (!array)
+      return false;
+    
+    // compare lengths - can save a lot of time
+    if (this.length != array.length)
+      return false;
+    
+    for (var i = 0, l=this.length; i < l; i++) {
+      // Check if we have nested arrays
+      if (this[i] instanceof Array && array[i] instanceof Array) {
+        // recurse into the nested arrays
+        if (!this[i].equals(array[i]))
+          return false;
+      }
+      else if (this[i] != array[i]) {
+        // Warning - two different object instances will never be equal: {x:20} != {x:20}
+        return false;
+      }
+    }
+    return true;
+  }
+  // Hide method from for-in loops
+  Object.defineProperty(Array.prototype, "equals", {enumerable: false});
+  
+  class ListHandlerTest {
+    static populateWith (sceneList) {
+      console.info('Scenes given to ListHandler: ', sceneList)
+    }
+  }
+  class AlertDisplayerTest {
+    static show (type, message) {
+      switch (type) {
+        case 'error':
+          console.error(message)
+          break;
+        case 'warn':
+          console.warn(message)
+        case 'testStart':
+          console.group(message)
+          break;
+        case 'testEnd':
+          console.groupEnd()
+          break;
+        case 'log':
+        default:
+          console.log(message)
+          break;
+      }
+    }
+  }
+  
+  const testSceneList = [
+    {
+      "title": "scene1",
+      "object": "object1",
+      "background": "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=",
+      "sideImage": "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=",
+      "sideText": "text\nwith\nline\nbrek",
+      "lastUsed": 1582449211207
+    },
+    {
+      "title": "scene2",
+      "object": "object2",
+      "background": "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=",
+      "sideImage": "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=",
+      "sideText": "text\nwith\nline\nbrek\nscnd",
+      "lastUsed": 1582449215207
+    },
+    {
+      "title": "scene3",
+      "object": "object3",
+      "background": "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=",
+      "sideImage": "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=",
+      "sideText": "text\nwith\nline\nbrek\nthrd",
+      "lastUsed": 1582449219207
+    }
+  ]
+  const newScene = {
+    "title": "scene4",
+    "object": "object4",
+    "background": "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=",
+    "sideImage": "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=",
+    "sideText": "text\nwith\nline\nbrek\nfrth",
+    "lastUsed": 1582449241207
+  }
+  const newScene2 = {
+    "title": "scene5",
+    "object": "object5",
+    "background": "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=",
+    "sideImage": "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=",
+    "sideText": "text\nwith\nline\nbrek\nfift",
+    "lastUsed": 1582449271207
+  }
+
+  const sh = new SceneHandler(ListHandlerTest, AlertDisplayerTest)
+  sh.sceneList = testSceneList
+  
+  AlertDisplayerTest.show('testStart', 'saving 3 scenes')
+  sh.save()
+  AlertDisplayerTest.show('log', 'force-removing loaded scenes')
+  sh.sceneList = []
+  sh.load()
+  if (sh.sceneList.length === 3) {
+    AlertDisplayerTest.show('test', 'saving success')
+  } else {
+    AlertDisplayerTest.show('error', 'saving fail')
+  }
+  AlertDisplayerTest.show('testEnd')
+  
+  AlertDisplayerTest.show('testStart', 'editing scene2')
+  const scene2edited = {
+    "title": "scene2",
+    "object": "object2ed",
+    "background": "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=",
+    "sideImage": "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=",
+    "sideText": "text\nwith\nline\nbrek\nscndeded",
+    "lastUsed": 1582449223207
+  }
+  sh.edit(scene2edited)
+  let newscenetitles = sh.sceneList.map(v => v.title)
+  if (newscenetitles.equals(['scene2', 'scene3', 'scene1'])) {
+    AlertDisplayerTest.show('test', 'editing success')
+  } else {
+    AlertDisplayerTest.show('error', 'editing fail')
+    AlertDisplayerTest.show('log', newscenetitles)
+    AlertDisplayerTest.show('log', sh.sceneList.map(v => v.lastUsed))
+  }
+  AlertDisplayerTest.show('testEnd')
+  
+  AlertDisplayerTest.show('testStart', 'adding a scene')
+  sh.add(newScene)
+  newscenetitles = sh.sceneList.map(v => v.title)
+  if (
+    newscenetitles.equals(['scene4', 'scene2', 'scene3', 'scene1'])
+  ) {
+    AlertDisplayerTest.show('test', 'adding success')
+  } else {
+    AlertDisplayerTest.show('error', 'adding fail')
+    AlertDisplayerTest.show('log', newscenetitles)
+    AlertDisplayerTest.show('log', sh.sceneList.map(v => v.lastUsed))
+  }
+  AlertDisplayerTest.show('testEnd')
+
+  AlertDisplayerTest.show('testStart', 'implicitly adding a scene')
+  sh.add(newScene2)
+  newscenetitles = sh.sceneList.map(v => v.title)
+  if (
+    newscenetitles.equals(['scene5', 'scene4', 'scene2', 'scene3', 'scene1'])
+  ) {
+    AlertDisplayerTest.show('test', 'implicit adding success')
+  } else {
+    AlertDisplayerTest.show('error', 'implicit adding fail')
+    AlertDisplayerTest.show('log', newscenetitles)
+    AlertDisplayerTest.show('log', sh.sceneList.map(v => v.lastUsed))
+  }
+  AlertDisplayerTest.show('testEnd')
+
+  AlertDisplayerTest.show('testStart', 'editing scene1')
+  const scene1edited = {
+    "title": "scene1",
+    "object": "object1",
+    "background": "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=",
+    "sideImage": "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=",
+    "sideText": "text\nwith\nline\nbrek",
+    "lastUsed": 1582449301207
+  }
+  sh.edit(scene1edited)
+  newscenetitles = sh.sceneList.map(v => v.title)
+  if (newscenetitles.equals(['scene1', 'scene5', 'scene4', 'scene2', 'scene3'])) {
+    AlertDisplayerTest.show('test', 'editing success')
+  } else {
+    AlertDisplayerTest.show('error', 'editing fail')
+    AlertDisplayerTest.show('log', newscenetitles)
+    AlertDisplayerTest.show('log', sh.sceneList.map(v => v.lastUsed))
+  }
+  AlertDisplayerTest.show('testEnd')
+  
+  AlertDisplayerTest.show('testStart', 'removing scene4')
+  sh.remove('scene4')
+  newscenetitles = sh.sceneList.map(v => v.title)
+  if (newscenetitles.equals(['scene1', 'scene5', 'scene2', 'scene3'])) {
+    AlertDisplayerTest.show('test', 'removing success')
+  } else {
+    AlertDisplayerTest.show('error', 'removing fail')
+    AlertDisplayerTest.show('log', newscenetitles)
+    AlertDisplayerTest.show('log', sh.sceneList.map(v => v.lastUsed))
+  }
+  AlertDisplayerTest.show('testEnd')
+  
+  AlertDisplayerTest.show('testStart', 'wrong edit attempt')
+  sh.edit({"title":"scene2","lastUsed":9999999999999})
+  if (sh.sceneList[2].lastUsed === 1582449223207) {
+    AlertDisplayerTest.show('test', 'wrong edit prevention success')
+  } else {
+    AlertDisplayerTest.show('error', 'wrong edit prevention fail')
+    AlertDisplayerTest.show('log', newscenetitles)
+    AlertDisplayerTest.show('log', sh.sceneList.map(v => v.lastUsed))
+  }
+  AlertDisplayerTest.show('testEnd')
+
+  AlertDisplayerTest.show('testStart', 'wrong add attempt')
+  sh.add({"title":"scene7",
+    "object":"object7",
+    "background":"randomtext",
+    "sideImage":"randomtext",
+    "sideText":"ewaweg",
+    "lastUsed":9999999999999})
+  if (sh.sceneList.findIndex(v => v.title === 'scene7') === -1) {
+    AlertDisplayerTest.show('test', 'wrong add prevention success')
+  } else {
+    AlertDisplayerTest.show('error', 'wrong add prevention fail')
+    AlertDisplayerTest.show('log', newscenetitles)
+    AlertDisplayerTest.show('log', sh.sceneList.map(v => v.lastUsed))
+  }
+  AlertDisplayerTest.show('testEnd')
+
+  AlertDisplayerTest.show('testStart', 'wrong remove attempt')
+  sh.remove('scene47')
+  if (newscenetitles.equals(['scene1', 'scene5', 'scene2', 'scene3'])) {
+    AlertDisplayerTest.show('test', 'wrong remove prevention success')
+  } else {
+    AlertDisplayerTest.show('error', 'wrong remove prevention fail')
+    AlertDisplayerTest.show('log', newscenetitles)
+    AlertDisplayerTest.show('log', sh.sceneList.map(v => v.lastUsed))
+  }
+  AlertDisplayerTest.show('testEnd')
+</script>
+
+<body>
+
+</body>
+
+</html>
