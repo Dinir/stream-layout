@@ -22,7 +22,7 @@ class SceneHandler {
    */
   constructor(listHandler, alertDisplayer) {
     this.listHandler = listHandler
-    this.alertDisplayer = alertDisplayer
+    this.alertDisplay = alertDisplayer
     this.load()
   }
   
@@ -30,7 +30,7 @@ class SceneHandler {
   load () {
     const scenesString = window.localStorage.getItem('scenesString')
     if (scenesString === null) {
-      this.alertDisplayer.show('log', 'No scenes are found.')
+      this.alertDisplay.show('log', 'No scenes are found.')
     } else {
       this.sceneList = JSON.parse(scenesString)
       this.sortScenesByTime()
@@ -43,9 +43,9 @@ class SceneHandler {
     const scenesString = JSON.stringify(this.sceneList)
     try {
       window.localStorage.setItem('scenesString', scenesString)
-      this.alertDisplayer.show('log', 'Scenes are stored.')
+      this.alertDisplay.show('log', 'Scenes are stored.')
     } catch (e) {
-      this.alertDisplayer.show('error', e)
+      this.alertDisplay.show('error', e)
     }
   }
   
@@ -57,7 +57,7 @@ class SceneHandler {
   edit (editedScene) {
     const validation = SceneHandler.validateScene(editedScene)
     if (!validation.result) {
-      this.alertDisplayer.show('error',
+      this.alertDisplay.show('error',
         `The scene to edit is invalid. Check: ${validation.issue}`)
       return
     }
@@ -67,7 +67,7 @@ class SceneHandler {
       this.add(editedScene)
     } else {
       this.sceneList[sceneIndexToEdit] = editedScene
-      this.alertDisplayer.show('log',
+      this.alertDisplay.show('log',
         `Scene ${this.sceneList[sceneIndexToEdit].title} is updated.`
       )
       this.sortScenesByTime()
@@ -81,12 +81,12 @@ class SceneHandler {
   add (newScene) {
     const validation = SceneHandler.validateScene(newScene)
     if (!validation.result) {
-      this.alertDisplayer.show('error',
+      this.alertDisplay.show('error',
         `The scene to add is invalid. Check: ${validation.issue}`)
       return
     }
     const newSceneAmount = this.sceneList.unshift(newScene)
-    this.alertDisplayer.show('log',
+    this.alertDisplay.show('log',
       `New scene ${newScene.title} is added. ${newSceneAmount} scenes available.`
     )
     this.sortScenesByTime()
@@ -98,11 +98,11 @@ class SceneHandler {
     if (sceneIndexToRemove === -1) {
       /* at the moment of typing this I can't think of
       a situation this could happen. */
-      this.alertDisplayer.show('error',
+      this.alertDisplay.show('error',
         'The scene is not found.')
     } else {
       const removedScene = this.sceneList.splice(sceneIndexToRemove, 1)
-      this.alertDisplayer.show('log',
+      this.alertDisplay.show('log',
         `Scene ${removedScene[0].title} is deleted.`)
     }
   }
