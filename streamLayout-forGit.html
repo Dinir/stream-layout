@@ -17,7 +17,7 @@
     <input class="title" type="text" placeholder="">
     <input class="object" type="text" placeholder="">
   </div>
-  <!-- <div class="currentTime"></div> -->
+  <!-- <div id="currentTime" class="nodisplay"></div> -->
   <div id="interactiveOptions">
     <div id="sceneListContainer">
       <ul id="sceneList"></ul>
@@ -59,9 +59,9 @@
     <div id="alertDisplay"></div>
   </div>
   <div id="sideArea">
-    <img id="sideImage" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="Side Image Area">
-    <label for="sideText">Side Text Area</label>
-    <textarea id="sideText"></textarea>
+    <img id="sideImage" class="side4x3" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="Side Image Area">
+    <label for="sideText" class="nodisplay">Side Text Area</label>
+    <textarea id="sideText" class="side2x3 noresize"></textarea>
   </div>
   <iframe id="chatBox" src="WEB_CHAT_APP_ADDRESS"></iframe>
 </div>
