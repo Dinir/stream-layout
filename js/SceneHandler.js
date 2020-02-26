@@ -34,7 +34,7 @@ class SceneHandler {
   load () {
     this.background = window.localStorage.getItem('backgroundImage')
     if (this.background && this.backgroundDom) {
-      this.backgroundDom.style.backgroundImage = background
+      this.backgroundDom.style.backgroundImage = this.background
     }
     const scenesString = window.localStorage.getItem('scenesString')
     if (scenesString === null) {
