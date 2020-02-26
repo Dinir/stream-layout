@@ -105,7 +105,10 @@
     "lastUsed": 1582449271207
   }
 
-  const sh = new SceneHandler(ListHandlerTest, AlertDisplayerTest)
+  const sh = new SceneHandler({
+    listHandler: ListHandlerTest,
+    alertDisplay: AlertDisplayerTest
+  })
   sh.sceneList = testSceneList
   
   AlertDisplayerTest.show('testStart', 'saving 3 scenes')

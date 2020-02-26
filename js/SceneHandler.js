@@ -3,7 +3,6 @@
  * @type {object}
  * @property {string} title single line string for game title
  * @property {string} object single line string describing what you want to achieve
- * @property {string} background base64 data of an image
  * @property {string} sideImage base64 data of an image
  * @property {string} sideText multi line string for any message
  * @property {number} lastUsed UTC milliseconds of last time the scene is interacted
@@ -16,18 +15,27 @@
 
 class SceneHandler {
   /**
-   *
    * @param {Class} listHandler an instance that controls a DOM that displays SceneList
    * @param {Class} alertDisplayer an instance that shows messages on the page
    */
-  constructor(listHandler, alertDisplayer) {
+  constructor({backgroundDom, listHandler, alertDisplay}) {
+    this.backgroundDom = backgroundDom
     this.listHandler = listHandler
-    this.alertDisplay = alertDisplayer
+    this.alertDisplay = alertDisplay
+    this.blankBackground = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='
+    /** @type {string} base64 data of a background image */
+    this.background = this.blankBackground
+    /** @type {SceneList} */
+    this.sceneList = []
     this.load()
   }
   
   /** load SceneList from localStorage. */
   load () {
+    this.background = window.localStorage.getItem('backgroundImage')
+    if (this.background && this.backgroundDom) {
+      this.backgroundDom.style.backgroundImage = background
+    }
     const scenesString = window.localStorage.getItem('scenesString')
     if (scenesString === null) {
       this.alertDisplay.show('log', 'No scenes are found.')
@@ -40,13 +48,36 @@ class SceneHandler {
   
   /** save SceneList to localStorage. */
   save () {
-    const scenesString = JSON.stringify(this.sceneList)
     try {
+      window.localStorage.setItem('backgroundImage', this.background)
+    } catch (e) {
+      this.alertDisplay.show('Can\'t store the background.\n', e)
+    }
+    try {
+      const scenesString = JSON.stringify(this.sceneList)
       window.localStorage.setItem('scenesString', scenesString)
       this.alertDisplay.show('log', 'Scenes are stored.')
     } catch (e) {
-      this.alertDisplay.show('error', e)
+      this.alertDisplay.show('Can\'t store scenes.\n', e)
     }
+  }
+  
+  /**
+   * store the background and apply it to the dom.
+   * @param {string} background base64 data of a background image
+   */
+  editBackground (background = '') {
+    if (
+      background !== '' && (
+        typeof background !== 'string' ||
+        background.slice(0, 5) !== 'data:'
+      )
+    ) {
+      this.alertDisplay.show('error', 'Background is invalid.')
+      return
+    }
+    this.background = background === '' ? this.blankBackground : background
+    this.backgroundDom.style.backgroundImage = this.background
   }
   
   /**
@@ -118,11 +149,6 @@ class SceneHandler {
     if (typeof scene.object !== 'string') {
       validity = false
       issue.push('object')
-    }
-    if (typeof scene.background !== 'string' ||
-        scene.background.slice(0, 5) !== 'data:') {
-      validity = false
-      issue.push('background')
     }
     if (typeof scene.sideImage !== 'string' ||
         scene.sideImage.slice(0, 5) !== 'data:') {
