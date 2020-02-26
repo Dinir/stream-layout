@@ -7,6 +7,13 @@ body {
   font-size: 14pt;
   color: #65849f; }
 
+/* simple or common properties */
+.nodisplay {
+  display: none; }
+
+.noresize {
+  resize: none; }
+
 /* base positioning and background images */
 #container {
   width: 800px;
@@ -73,18 +80,16 @@ body {
   top: 45px;
   left: 596px; }
 
+#container #sideArea .side4x3 {
+  width: 160px;
+  height: 120px; }
+
+#container #sideArea .side2x3 {
+  width: 160px;
+  height: 240px; }
+
 #container #sideArea #sideImage {
-  width: 100%;
-  height: 120px;
   display: block; }
-
-#container #sideArea label {
-  display: none; }
-
-#container #sideArea #sideText {
-  width: 100%;
-  height: 240px;
-  resize: none; }
 
 #container #chatBox {
   position: absolute;
@@ -92,8 +97,5 @@ body {
   width: 800px;
   height: 45px;
   border: none; }
-
-#container #currentTime {
-  display: none; }
 
 /*# sourceMappingURL=layout.css.map */
