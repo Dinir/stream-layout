@@ -21,12 +21,15 @@ class SceneHandler {
   constructor({backgroundDom, alertDisplay}) {
     this.backgroundDom = backgroundDom
     this.alertDisplay = alertDisplay
-    this.blankBackground = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='
     /** @type {string} base64 data of a background image */
-    this.background = this.blankBackground
+    this.background = SceneHandler.blankBackground
     /** @type {SceneList} */
     this.sceneList = []
     this.load()
+  }
+  
+  static get blankBackground () {
+    return 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='
   }
   
   /** load SceneList from localStorage. */
@@ -76,7 +79,7 @@ class SceneHandler {
       this.alertDisplay.show('error', 'Background is invalid.')
       return
     }
-    this.background = background === '' ? this.blankBackground : background
+    this.background = background === '' ? SceneHandler.blankBackground : background
     this.backgroundDom.style.backgroundImage = this.background
   }
   
