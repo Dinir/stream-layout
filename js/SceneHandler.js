@@ -16,11 +16,10 @@
 class SceneHandler {
   /**
    * @param {Class} listHandler an instance that controls a DOM that displays SceneList
-   * @param {Class} alertDisplayer an instance that shows messages on the page
+   * @param {Class} alertDisplay an instance that shows messages on the page
    */
-  constructor({backgroundDom, listHandler, alertDisplay}) {
+  constructor({backgroundDom, alertDisplay}) {
     this.backgroundDom = backgroundDom
-    this.listHandler = listHandler
     this.alertDisplay = alertDisplay
     this.blankBackground = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='
     /** @type {string} base64 data of a background image */
@@ -39,10 +38,11 @@ class SceneHandler {
     const scenesString = window.localStorage.getItem('scenesString')
     if (scenesString === null) {
       this.alertDisplay.show('log', 'No scenes are found.')
+      return false
     } else {
       this.sceneList = JSON.parse(scenesString)
       this.sortScenesByTime()
-      this.updateList(this.sceneList)
+      return this.sceneList
     }
   }
   
@@ -169,10 +169,5 @@ class SceneHandler {
   
   sortScenesByTime () {
     this.sceneList.sort((a, b) => b.lastUsed - a.lastUsed)
-  }
-  
-  /** send SceneList to listHandler */
-  updateList () {
-    this.listHandler.populateWith(this.sceneList)
   }
 }
