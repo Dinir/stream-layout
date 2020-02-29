@@ -1,6 +1,11 @@
 #sideArea #sideImage {
   object-fit: contain; }
 
+#sideArea label[for=sideImageLoader] {
+  display: block;
+  position: absolute;
+  top: 0; }
+
 #sideArea #sideText {
   background: transparent;
   padding: 0;

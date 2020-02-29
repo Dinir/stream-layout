@@ -4,6 +4,12 @@
   #sideImage {
     object-fit: contain;
   }
+  label[for=sideImageLoader] {
+    display: block;
+    position: absolute;
+    top: 0;
+  }
+  
   #sideText {
     background: transparent;
     padding: 0;
