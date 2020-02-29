@@ -13,9 +13,9 @@
 <body>
 <div id="container">
   <div id="layoutFrame"></div>
-  <div id="titleTexts">
-    <input class="title" type="text" placeholder="">
-    <input class="object" type="text" placeholder="">
+  <div id="headerTexts">
+    <input id="headerTitle" type="text" placeholder="">
+    <input id="headerObject" type="text" placeholder="">
   </div>
   <div id="currentTime" class="nodisplay"></div>
   <div id="interactiveOptions">
@@ -124,11 +124,12 @@
 <script src="./js/InputFocusCyclerWithStorage.js"></script>
 <script>
   const inputArray = [
-    document.querySelector('#titleTexts .title'),
-    document.querySelector('#titleTexts .object')
+    document.querySelector('#headerTitle'),
+    document.querySelector('#headerObject'),
+    document.querySelector('#sideText')
   ]
-  const titleFocusCycler = new InputFocusCyclerWithStorage(inputArray, 13) // keycode 13 = ENTER
-  titleFocusCycler.applyCycling()
+  const textFocusCycler = new InputFocusCyclerWithStorage(inputArray, 9) // keycode 9 = TAB
+  textFocusCycler.applyCycling()
 </script>
 
 <script src="./js/ClockDisplay.js"></script>

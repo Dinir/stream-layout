@@ -1,6 +1,6 @@
-#titleTexts {
+#headerTexts {
   overflow: hidden; }
-  #titleTexts input {
+  #headerTexts input {
     display: block;
     background: transparent;
     padding: 0;
@@ -9,15 +9,15 @@
     width: 100%;
     font-family: "Fira Code", monospace;
     text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black; }
-    #titleTexts input.title {
-      font-size: 1em;
-      /* 14pt */
-      color: #65849f;
-      font-weight: bold; }
-    #titleTexts input.object {
-      font-size: 0.7857em;
-      /* 11pt */
-      color: #4f687d;
-      font-family: "Fira Code Retina", monospace; }
+  #headerTexts #headerTitle {
+    font-size: 1em;
+    /* 14pt */
+    color: #65849f;
+    font-weight: bold; }
+  #headerTexts #headerObject {
+    font-size: 0.7857em;
+    /* 11pt */
+    color: #4f687d;
+    font-family: "Fira Code Retina", monospace; }
 
 /*# sourceMappingURL=titleTexts.css.map */

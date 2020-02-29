@@ -30,7 +30,7 @@ body {
     background-image: url("./../StreamLayoutVertical.png"); }
 
 /* source positions */
-#container #titleTexts {
+#container #headerTexts {
   position: absolute;
   top: 0;
   left: 0;

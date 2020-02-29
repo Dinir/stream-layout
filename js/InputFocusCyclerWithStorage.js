@@ -7,13 +7,13 @@ class InputFocusCyclerWithStorage extends InputFocusCycler {
   
   saveInputs() {
     this.elems.forEach(input => {
-      window.localStorage.setItem(`input-${input.className}`, input.value)
+      window.localStorage.setItem(`input-${input.id}`, input.value)
     })
   }
   
   loadInputs() {
     this.elems.forEach(input => {
-      input.value = window.localStorage.getItem(`input-${input.className}`)
+      input.value = window.localStorage.getItem(`input-${input.id}`)
     })
   }
   

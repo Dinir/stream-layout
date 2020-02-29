@@ -1,6 +1,6 @@
 @import 'dnr';
 
-#titleTexts {
+#headerTexts {
   overflow: hidden;
   input {
     display: block;
@@ -16,15 +16,15 @@
       1px -1px 0 black,
       -1px 1px 0 black,
       1px 1px 0 black;
-    &.title {
-      font-size: 1em; /* 14pt */
-      color: $dnr-blue-base;
-      font-weight: bold;
-    }
-    &.object {
-      font-size: 0.7857em; /* 11pt */
-      color: $dnr-blue-dark;
-      font-family: "Fira Code Retina", monospace;
-    }
+  }
+  #headerTitle {
+    font-size: 1em; /* 14pt */
+    color: $dnr-blue-base;
+    font-weight: bold;
+  }
+  #headerObject {
+    font-size: 0.7857em; /* 11pt */
+    color: $dnr-blue-dark;
+    font-family: "Fira Code Retina", monospace;
   }
 }
