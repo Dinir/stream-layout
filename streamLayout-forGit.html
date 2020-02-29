@@ -11,27 +11,27 @@
 </head>
 
 <body>
-<div id="container">
-  <div id="layoutFrame"></div>
-  <div id="headerTexts">
-    <input id="headerTitle" type="text" placeholder="">
-    <input id="headerObject" type="text" placeholder="">
-  </div>
-  <div id="currentTime" class="nodisplay"></div>
-  <div id="interactiveOptions">
-    <div id="sceneListContainer">
-      <ul id="sceneList"></ul>
+  <div id="container">
+    <div id="layoutFrame"></div>
+    <div id="headerTexts">
+      <input id="headerTitle" type="text" placeholder="">
+      <input id="headerObject" type="text" placeholder="">
     </div>
-    <template id="sceneEntry">
-      <li>
-        <span class="title"></span>
-        <button></button>
-        <button></button>
-      </li>
-    </template>
-    <div id="shakeThresholdControl">
-      <input type="text" placeholder="88,96,104,112,120" pattern="[0-9,]+">
-      <div class="meterDisplay">
+    <div id="currentTime" class="nodisplay"></div>
+    <div id="interactiveOptions">
+      <div id="sceneListContainer">
+        <ul id="sceneList"></ul>
+      </div>
+      <template id="sceneEntry">
+        <li>
+          <span class="title"></span>
+          <button></button>
+          <button></button>
+        </li>
+      </template>
+      <div id="shakeThresholdControl">
+        <input type="text" placeholder="88,96,104,112,120" pattern="[0-9,]+">
+        <div class="meterDisplay">
           <span class="ruler">
             <svg viewBox="0 0 200 16" xmlns="http://www.w3.org/2000/svg">
               <defs>
@@ -53,20 +53,20 @@
               <span>200</span>
             </span>
           </span>
-        <span class="meter"></span>
+          <span class="meter"></span>
+        </div>
       </div>
+      <div id="alertDisplay"></div>
     </div>
-    <div id="alertDisplay"></div>
+    <div id="sideArea">
+      <img id="sideImage" class="side4x3" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="">
+      <input type="file" id="sideImageLoader" class="nodisplay">
+      <label for="sideImageLoader" class="side4x3"></label>
+      <label for="sideText" class="nodisplay">Side Text Area</label>
+      <textarea id="sideText" class="side2x3 noresize"></textarea>
+    </div>
+    <iframe id="chatBox" src="WEB_CHAT_APP_ADDRESS"></iframe>
   </div>
-  <div id="sideArea">
-    <img id="sideImage" class="side4x3" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="">
-    <input type="file" id="sideImageLoader" class="nodisplay">
-    <label for="sideImageLoader" class="side4x3"></label>
-    <label for="sideText" class="nodisplay">Side Text Area</label>
-    <textarea id="sideText" class="side2x3 noresize"></textarea>
-  </div>
-  <iframe id="chatBox" src="WEB_CHAT_APP_ADDRESS"></iframe>
-</div>
 </body>
 
 <script src="./js/getQueryVariable.js"></script>
@@ -87,7 +87,7 @@
   })
   layoutShaker.applyShaking(layoutContainer)
   const shakeThresholdInput =
-    document.querySelector('#shakeThresholdControl input')
+    document.querySelector('#thresholdInput')
   shakeThresholdInput.value =
     layoutShaker.config.shakeThreshold.join(',')
   shakeThresholdInput.addEventListener('change', (e) => {
