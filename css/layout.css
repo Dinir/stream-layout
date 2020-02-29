@@ -40,7 +40,6 @@ body {
 
 #container #currentTime {
   position: absolute;
-  display: inline-block;
   font-size: 10pt;
   width: 64px;
   height: 16.5px;
