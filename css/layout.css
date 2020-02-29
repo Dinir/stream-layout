@@ -7,6 +7,12 @@ body {
   font-size: 14pt;
   color: #65849f; }
 
+input, textarea {
+  color: #65849f; }
+
+input, label {
+  font-size: 0.696em; }
+
 /* simple or common properties */
 .nodisplay {
   display: none; }

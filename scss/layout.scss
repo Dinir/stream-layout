@@ -15,6 +15,12 @@ body {
   font-size: 14pt;
   color: $dnr-blue-base;
 }
+input, textarea {
+  color: $dnr-blue-base;
+}
+input, label {
+  font-size: 0.696em;
+}
 
 /* simple or common properties */
 .nodisplay { display: none; }
