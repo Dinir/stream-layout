@@ -32,12 +32,59 @@ class SceneHandler {
     this.load()
   }
   
+  static validateScene (scene) {
+    let validity = true
+    const issue = []
+    if (typeof scene.title !== 'string' ||
+        scene.title.length === 0) {
+      validity = false
+      issue.push('title')
+    }
+    if (typeof scene.object !== 'string') {
+      validity = false
+      issue.push('object')
+    }
+    if (typeof scene.sideImage !== 'string' ||
+        scene.sideImage.slice(0, 5) !== 'data:') {
+      validity = false
+      issue.push('sideImage')
+    }
+    if (typeof scene.sideText !== 'string') {
+      validity = false
+      issue.push('sideText')
+    }
+    if (typeof scene.lastUsed !== 'number') {
+      validity = false
+      issue.push('lastUsed')
+    }
+    
+    return {result: validity, issue: issue}
+  }
+  static get blankBackground () {
+    return 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='
+  }
   newSceneEvent (type, detail) {
     this.eventTarget.dispatchEvent(new CustomEvent(type, { detail: detail }))
   }
   
-  static get blankBackground () {
-    return 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='
+  /**
+   * returns array of title and timestamp of each scene.
+   * @returns {{title: String, lastUsed: number}[]}
+   */
+  get list () {
+    return this.sceneList.map(v => ({
+      title: v.title, lastUsed: v.lastUsed
+    }))
+  }
+  
+  /**
+   * returns a scene with the given title.
+   * @param title
+   * @returns {Scene | null}
+   */
+  entry (title) {
+    const sceneIndex = this.sceneList.findIndex(s => s.title === title)
+    return this.sceneList[sceneIndex] || null
   }
   
   /** load SceneList from localStorage. */
@@ -53,10 +100,9 @@ class SceneHandler {
     } else {
       this.sceneList = JSON.parse(scenesString)
       this.sortScenesByTime()
-      return this.sceneList
+      return this.list
     }
   }
-  
   /** save SceneList to localStorage. */
   save () {
     this.saveBackground()
@@ -178,35 +224,6 @@ class SceneHandler {
         message: `Scene ${removedScene[0].title} is deleted.`
       })
     }
-  }
-  
-  static validateScene (scene) {
-    let validity = true
-    const issue = []
-    if (typeof scene.title !== 'string' ||
-        scene.title.length === 0) {
-      validity = false
-      issue.push('title')
-    }
-    if (typeof scene.object !== 'string') {
-      validity = false
-      issue.push('object')
-    }
-    if (typeof scene.sideImage !== 'string' ||
-        scene.sideImage.slice(0, 5) !== 'data:') {
-      validity = false
-      issue.push('sideImage')
-    }
-    if (typeof scene.sideText !== 'string') {
-      validity = false
-      issue.push('sideText')
-    }
-    if (typeof scene.lastUsed !== 'number') {
-      validity = false
-      issue.push('lastUsed')
-    }
-    
-    return {result: validity, issue: issue}
   }
   
   sortScenesByTime () {
