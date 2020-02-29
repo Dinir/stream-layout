@@ -15,17 +15,25 @@
 
 class SceneHandler {
   /**
-   * @param {Class} listHandler an instance that controls a DOM that displays SceneList
-   * @param {Class} alertDisplay an instance that shows messages on the page
+   * @param {HTMLDivElement} backgroundDom parent dom containing all other scene elements
+   * @param {HTMLElement} eventTarget event target to listen events of this class like list update and alert
    */
-  constructor({backgroundDom, alertDisplay}) {
+  constructor({backgroundDom, eventTarget}) {
     this.backgroundDom = backgroundDom
-    this.alertDisplay = alertDisplay
+    this.eventTarget = eventTarget
+    this.eventType = {
+      UPDATE: 'listUpdate',
+      LOG: 'sceneMessage'
+    }
     /** @type {string} base64 data of a background image */
     this.background = SceneHandler.blankBackground
     /** @type {SceneList} */
     this.sceneList = []
     this.load()
+  }
+  
+  newSceneEvent (type, detail) {
+    this.eventTarget.dispatchEvent(new CustomEvent(type, { detail: detail }))
   }
   
   static get blankBackground () {
@@ -37,7 +45,10 @@ class SceneHandler {
     this.loadBackground()
     const scenesString = window.localStorage.getItem('scenesString')
     if (scenesString === null) {
-      this.alertDisplay.show('log', 'No scenes are found.')
+      this.newSceneEvent(this.eventType.LOG, {
+        type: 'log',
+        message: 'No scenes are found.'
+      })
       return false
     } else {
       this.sceneList = JSON.parse(scenesString)
@@ -52,9 +63,15 @@ class SceneHandler {
     try {
       const scenesString = JSON.stringify(this.sceneList)
       window.localStorage.setItem('scenesString', scenesString)
-      this.alertDisplay.show('log', 'Scenes are stored.')
+      this.newSceneEvent(this.eventType.LOG, {
+        type: 'log',
+        message: 'Scenes are stored.'
+      })
     } catch (e) {
-      this.alertDisplay.show('Can\'t store scenes.\n', e)
+      this.newSceneEvent(this.eventType.LOG, {
+        type: 'error',
+        message: `Can't store scenes.\n${e}`
+      })
     }
   }
   
@@ -69,7 +86,10 @@ class SceneHandler {
         background.slice(0, 5) !== 'data:'
       )
     ) {
-      this.alertDisplay.show('error', 'Background is invalid.')
+      this.newSceneEvent(this.eventType.LOG, {
+        type: 'error',
+        message: 'Background is invalid.'
+      })
       return
     }
     this.background = background === '' ? SceneHandler.blankBackground : background
@@ -100,8 +120,10 @@ class SceneHandler {
   edit (editedScene) {
     const validation = SceneHandler.validateScene(editedScene)
     if (!validation.result) {
-      this.alertDisplay.show('error',
-        `The scene to edit is invalid. Check: ${validation.issue}`)
+      this.newSceneEvent(this.eventType.LOG, {
+        type: 'error',
+        message: `The scene to edit is invalid. Check: ${validation.issue}`
+      })
       return
     }
     const sceneIndexToEdit =
@@ -110,9 +132,10 @@ class SceneHandler {
       this.add(editedScene)
     } else {
       this.sceneList[sceneIndexToEdit] = editedScene
-      this.alertDisplay.show('log',
-        `Scene ${this.sceneList[sceneIndexToEdit].title} is updated.`
-      )
+      this.newSceneEvent(this.eventType.LOG, {
+        type: 'log',
+        message: `Scene ${this.sceneList[sceneIndexToEdit].title} is updated.`
+      })
       this.sortScenesByTime()
     }
   }
@@ -124,14 +147,17 @@ class SceneHandler {
   add (newScene) {
     const validation = SceneHandler.validateScene(newScene)
     if (!validation.result) {
-      this.alertDisplay.show('error',
-        `The scene to add is invalid. Check: ${validation.issue}`)
+      this.newSceneEvent(this.eventType.LOG, {
+        type: 'error',
+        message: `The scene to add is invalid. Check: ${validation.issue}`
+      })
       return
     }
     const newSceneAmount = this.sceneList.unshift(newScene)
-    this.alertDisplay.show('log',
-      `New scene ${newScene.title} is added. ${newSceneAmount} scenes available.`
-    )
+    this.newSceneEvent(this.eventType.LOG, {
+      type: 'log',
+      message: `New scene ${newScene.title} is added. ${newSceneAmount} scenes available.`
+    })
     this.sortScenesByTime()
   }
   
@@ -141,12 +167,16 @@ class SceneHandler {
     if (sceneIndexToRemove === -1) {
       /* at the moment of typing this I can't think of
       a situation this could happen. */
-      this.alertDisplay.show('error',
-        'The scene is not found.')
+      this.newSceneEvent(this.eventType.LOG, {
+        type: 'error',
+        message: 'The scene is not found.'
+      })
     } else {
       const removedScene = this.sceneList.splice(sceneIndexToRemove, 1)
-      this.alertDisplay.show('log',
-        `Scene ${removedScene[0].title} is deleted.`)
+      this.newSceneEvent(this.eventType.LOG, {
+        type: 'log',
+        message: `Scene ${removedScene[0].title} is deleted.`
+      })
     }
   }
   
@@ -181,5 +211,6 @@ class SceneHandler {
   
   sortScenesByTime () {
     this.sceneList.sort((a, b) => b.lastUsed - a.lastUsed)
+    this.newSceneEvent(this.eventType.UPDATE, this.list)
   }
 }

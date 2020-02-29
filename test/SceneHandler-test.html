@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<body>
+
+</body>
+
 <script src="../js/SceneHandler.js"></script>
 <script>
   // Array comparison function from https://stackoverflow.com/a/14853974
@@ -33,7 +37,9 @@
   }
   // Hide method from for-in loops
   Object.defineProperty(Array.prototype, "equals", {enumerable: false});
-  
+</script>
+
+<script>
   class ListHandlerTest {
     static populateWith (sceneList) {
       console.info('Scenes given to ListHandler: ', sceneList)
@@ -61,6 +67,9 @@
       }
     }
   }
+  document.body.addEventListener('sceneMessage', e => {
+    AlertDisplayerTest.show(e.detail.type, 'reacting to sceneMessage: ' + e.detail.message)
+  })
   
   const testSceneList = [
     {
@@ -106,8 +115,8 @@
   }
 
   const sh = new SceneHandler({
-    listHandler: ListHandlerTest,
-    alertDisplay: AlertDisplayerTest
+	  backgroundDom: document.body,
+	  eventTarget: document.body
   })
   sh.sceneList = testSceneList
   
@@ -204,8 +213,9 @@
   AlertDisplayerTest.show('testEnd')
   
   AlertDisplayerTest.show('testStart', 'wrong edit attempt')
+  let oldTimestamp = sh.sceneList[2].lastUsed
   sh.edit({"title":"scene2","lastUsed":9999999999999})
-  if (sh.sceneList[2].lastUsed === 1582449223207) {
+  if (sh.sceneList[2].lastUsed === oldTimestamp) {
     AlertDisplayerTest.show('test', 'wrong edit prevention success')
   } else {
     AlertDisplayerTest.show('error', 'wrong edit prevention fail')
