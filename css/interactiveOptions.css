@@ -1,0 +1,47 @@
+#interactiveOptions {
+  opacity: 0;
+  transition: opacity 0.2s; }
+  #interactiveOptions:hover {
+    opacity: 1; }
+  #interactiveOptions #sceneListContainer {
+    overflow-y: scroll;
+    display: inline-block; }
+  #container.hori #interactiveOptions #sceneListContainer {
+    width: 50%;
+    height: 100%; }
+  #container.vert #interactiveOptions #sceneListContainer {
+    width: 100%;
+    height: 50%; }
+  #interactiveOptions #shakeThresholdControl {
+    display: inline-block; }
+    #interactiveOptions #shakeThresholdControl input {
+      width: 200px;
+      border-width: 0 0 2px;
+      border-style: solid;
+      border-color: #3b4e5e;
+      margin-bottom: 2px;
+      background: transparent; }
+    #interactiveOptions #shakeThresholdControl .meterDisplay {
+      position: relative;
+      width: 200px;
+      height: 32px; }
+      #interactiveOptions #shakeThresholdControl .meterDisplay .ruler svg {
+        display: block;
+        height: 16px; }
+      #interactiveOptions #shakeThresholdControl .meterDisplay .ruler .numbers {
+        position: relative;
+        top: -10px;
+        font-size: 0.5em;
+        display: flex;
+        justify-content: space-between; }
+        #interactiveOptions #shakeThresholdControl .meterDisplay .ruler .numbers span {
+          width: 2em; }
+      #interactiveOptions #shakeThresholdControl .meterDisplay .meter {
+        display: block;
+        height: 4px;
+        margin-top: 2px;
+        background-color: #0f0;
+        position: absolute;
+        top: 0; }
+
+/*# sourceMappingURL=interactiveOptions.css.map */
