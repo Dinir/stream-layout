@@ -177,6 +177,7 @@ class SceneHandler {
     if (sceneIndexToEdit === -1) {
       this.add(editedScene)
     } else {
+      editedScene.lastUsed = Date.now()
       this.sceneList[sceneIndexToEdit] = editedScene
       this.newSceneEvent(this.eventType.LOG, {
         type: 'log',
@@ -199,6 +200,7 @@ class SceneHandler {
       })
       return
     }
+    newScene.lastUsed = Date.now()
     const newSceneAmount = this.sceneList.unshift(newScene)
     this.newSceneEvent(this.eventType.LOG, {
       type: 'log',
