@@ -36,13 +36,31 @@ class SceneRenderer {
     this.fileReader = new FileReader()
     
     this.dom.sideImageLoader.addEventListener('change', this.setSideImage.bind(this))
+    // temporary way to store the image until this is properly connected to SceneHandler
+    this.temporarilyRetrieveSideImage()
+  }
+  
+  temporarilyRetrieveSideImage() {
+    const storedImageData = window.localStorage.getItem('tempSideImage')
+    if (storedImageData) {
+      this.dom.sideImage.src = storedImageData
+    }
+  }
+  temporarilyStoreSideImage (imageData) {
+    this.dom.sideImage.src = imageData
+    window.localStorage.setItem('tempSideImage', imageData)
+  }
+  temporarilyRemoveSideImage () {
+    this.dom.sideImage.src = ''
+    window.localStorage.removeItem('tempSideImage')
   }
   
   setSideImage () {
     const file = this.dom.sideImageLoader.files[0]
     this.fileReader.addEventListener('load', () => {
-      this.dom.sideImage.src = this.fileReader.result
       this.scene.sideImage = this.fileReader.result
+      // temporary way to store the image until this is properly connected to SceneHandler
+      this.temporarilyStoreSideImage(this.fileReader.result)
     }, false)
     if (file) { this.fileReader.readAsDataURL(file) }
   }

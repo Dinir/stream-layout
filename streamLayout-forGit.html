@@ -59,7 +59,7 @@
     <div id="alertDisplay"></div>
   </div>
   <div id="sideArea">
-    <img id="sideImage" class="side4x3" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="Side Image Area">
+    <img id="sideImage" class="side4x3" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="">
     <input type="file" id="sideImageLoader" class="nodisplay">
     <label for="sideImageLoader" class="side4x3"></label>
     <label for="sideText" class="nodisplay">Side Text Area</label>
@@ -117,6 +117,12 @@
     sideImage: document.getElementById('sideImage'),
     sideImageLoader: document.getElementById('sideImageLoader'),
     sideText: document.getElementById('sideText')
+  })
+  const sideImageLabel = document.querySelector('label[for=sideImageLoader]')
+  sideImageLabel.addEventListener('mouseup', e => {
+    if (e.button === 2) {
+      renderer.temporarilyRemoveSideImage()
+    }
   })
 </script>
 
