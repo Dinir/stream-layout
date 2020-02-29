@@ -34,10 +34,7 @@ class SceneHandler {
   
   /** load SceneList from localStorage. */
   load () {
-    this.background = window.localStorage.getItem('backgroundImage')
-    if (this.background && this.backgroundDom) {
-      this.backgroundDom.style.backgroundImage = this.background
-    }
+    this.loadBackground()
     const scenesString = window.localStorage.getItem('scenesString')
     if (scenesString === null) {
       this.alertDisplay.show('log', 'No scenes are found.')
@@ -51,11 +48,7 @@ class SceneHandler {
   
   /** save SceneList to localStorage. */
   save () {
-    try {
-      window.localStorage.setItem('backgroundImage', this.background)
-    } catch (e) {
-      this.alertDisplay.show('Can\'t store the background.\n', e)
-    }
+    this.saveBackground()
     try {
       const scenesString = JSON.stringify(this.sceneList)
       window.localStorage.setItem('scenesString', scenesString)
@@ -81,6 +74,22 @@ class SceneHandler {
     }
     this.background = background === '' ? SceneHandler.blankBackground : background
     this.backgroundDom.style.backgroundImage = this.background
+  }
+  loadBackground () {
+    this.background = window.localStorage.getItem('backgroundImage')
+    if (this.background && this.backgroundDom) {
+      this.backgroundDom.style.backgroundImage = this.background
+    }
+  }
+  saveBackground () {
+    try {
+      window.localStorage.setItem('backgroundImage', this.background)
+    } catch (e) {
+      this.newSceneEvent(this.eventType.LOG, {
+        type: 'error',
+        message: `Can't store the background.\n${e}`
+      })
+    }
   }
   
   /**
