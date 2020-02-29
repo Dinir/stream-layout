@@ -30,7 +30,7 @@
       </li>
     </template>
     <div id="shakeThresholdControl">
-      <input type="text" placeholder="88,96,104,112,120">
+      <input type="text" placeholder="88,96,104,112,120" pattern="[0-9,]+">
       <div class="meterDisplay">
           <span class="ruler">
             <svg viewBox="0 0 200 16" xmlns="http://www.w3.org/2000/svg">
@@ -86,10 +86,28 @@
     property: 'width'
   })
   layoutShaker.applyShaking(layoutContainer)
+  const shakeThresholdInput =
+    document.querySelector('#shakeThresholdControl input')
+  shakeThresholdInput.value =
+    layoutShaker.config.shakeThreshold.join(',')
+  shakeThresholdInput.addEventListener('change', (e) => {
+    if (shakeThresholdInput.checkValidity()) {
+      shakeThresholdInput.setAttribute('class', 'correctInput')
+      layoutShaker.config.shakeThreshold =
+        shakeThresholdInput.value.split(',')
+    } else {
+      shakeThresholdInput.setAttribute('class', 'wrongInput')
+    }
+  })
 </script>
 
-<!--<script src="./js/SceneHandler.js"></script>
-<script></script>-->
+<script src="./js/SceneHandler.js"></script>
+<script>
+  const sceneHandler = new SceneHandler({
+    backgroundDom: document.getElementById('container'),
+    eventTarget: document.getElementById('container')
+  })
+</script>
 
 <script src="./js/SceneRenderer.js"></script>
 <script>
