@@ -2,7 +2,7 @@ class DomVuShaker {
   constructor (shakeConfig, monitorConfig) {
     this.config = {
       targetDom: shakeConfig.targetDom || null,
-      shakeThreshold: shakeConfig.shakeThreshold || [88,96,104,112,120],
+      shakeThreshold: shakeConfig.shakeThreshold || [70,120],
       shakeScale: shakeConfig.shakeScale || 2,
       active: shakeConfig.active || true
     }
