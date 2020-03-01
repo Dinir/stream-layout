@@ -72,10 +72,12 @@
 
 <script src="./js/getQueryVariable.js"></script>
 <script>
-  const scene = getQueryVariable('scene')
-  
   const layoutContainer = document.getElementById('container')
-  layoutContainer.setAttribute('class', scene)
+  const sceneType = getQueryVariable('scene') ||
+                    window.localStorage.getItem('sceneType') ||
+                    'hori'
+  window.localStorage.setItem('sceneType', sceneType)
+  layoutContainer.setAttribute('class', sceneType)
 </script>
 
 <script src="./js/DomVuShaker.js"></script>

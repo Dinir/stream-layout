@@ -6,5 +6,5 @@ const getQueryVariable = parameter => {
     const pair = vars[i].split("=")
     if (pair[0] === parameter) return pair[1]
   }
-  return 'hori'
+  return null
 }
