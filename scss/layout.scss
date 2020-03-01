@@ -1,4 +1,6 @@
 /* consistent values */
+$layoutWidth: 800px;
+$layoutHeight: 450px;
 $lineAreaHeight: 45px;
 $mainAreaWidth: 640px;
 $mainAreaHeight: 360px;
@@ -28,8 +30,8 @@ input, label {
 
 /* base positioning and background images */
 #container {
-  width: 800px;
-  height: 450px;
+  width: $layoutWidth;
+  height: $layoutHeight;
   overflow: hidden;
   
   // for custom background
