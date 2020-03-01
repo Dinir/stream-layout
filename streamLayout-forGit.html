@@ -11,62 +11,65 @@
 </head>
 
 <body>
-<div id="container">
-  <div id="layoutFrame"></div>
-  <div id="headerTexts">
-    <input id="headerTitle" type="text" placeholder="">
-    <input id="headerObject" type="text" placeholder="">
-  </div>
-  <div id="currentTime" class="nodisplay"></div>
-  <div id="interactiveOptions">
-    <div id="sceneListContainer">
-      <ul id="sceneList"></ul>
+<div id="roller">
+  <div id="container">
+    <div id="background"></div>
+    <div id="layoutFrame"></div>
+    <div id="headerTexts">
+      <input id="headerTitle" type="text" placeholder="">
+      <input id="headerObject" type="text" placeholder="">
     </div>
-    <template id="sceneEntry">
-      <li>
-        <span class="title"></span>
-        <button></button>
-        <button></button>
-      </li>
-    </template>
-    <div id="shakeThresholdControl">
-      <label for="thresholdInput">Shake Threshold</label><br>
-      <input id="thresholdInput" type="text" placeholder="88,96,104,112,120" pattern="[0-9,]+">
-      <div class="meterDisplay">
-        <span class="ruler">
-          <svg viewBox="0 0 200 16" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="blueToRed">
-                <stop offset="5%"  stop-color="#65849f"></stop>
-                <stop offset="95%" stop-color="#9d6265"></stop>
-              </linearGradient>
-              <marker id="rulerBar" viewBox="0 0 2 16" refX="1" refY="0" markerWidth="2" markerHeight="16">
-                <line x1="1" y1="0" x2="1" y2="16" stroke="#27333f"></line>
-              </marker>
-            </defs>
-            
-            <rect width="200" height="8" fill="url(#blueToRed)"></rect>
-            <polyline points="1,0 20,0 40,0 60,0 80,0 100,0 120,0 140,0 160,0 180,0 199,0" fill="none" stroke="#27333F" marker-start="url(#rulerBar)" marker-mid="url(#rulerBar)" marker-end="url(#rulerBar)"></polyline>
-          </svg>
-          <span class="numbers">
-            <span>0</span>
-            <span>100</span>
-            <span>200</span>
-          </span>
-        </span>
-        <span class="meter"></span>
+    <div id="currentTime" class="nodisplay"></div>
+    <div id="interactiveOptions">
+      <div id="sceneListContainer">
+        <ul id="sceneList"></ul>
       </div>
+      <template id="sceneEntry">
+        <li>
+          <span class="title"></span>
+          <button></button>
+          <button></button>
+        </li>
+      </template>
+      <div id="shakeThresholdControl">
+        <label for="thresholdInput">Shake Threshold</label><br>
+        <input id="thresholdInput" type="text" placeholder="88,96,104,112,120" pattern="[0-9,]+">
+        <div class="meterDisplay">
+          <span class="ruler">
+            <svg viewBox="0 0 200 16" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="blueToRed">
+                  <stop offset="5%"  stop-color="#65849f"></stop>
+                  <stop offset="95%" stop-color="#9d6265"></stop>
+                </linearGradient>
+                <marker id="rulerBar" viewBox="0 0 2 16" refX="1" refY="0" markerWidth="2" markerHeight="16">
+                  <line x1="1" y1="0" x2="1" y2="16" stroke="#27333f"></line>
+                </marker>
+              </defs>
+              
+              <rect width="200" height="8" fill="url(#blueToRed)"></rect>
+              <polyline points="1,0 20,0 40,0 60,0 80,0 100,0 120,0 140,0 160,0 180,0 199,0" fill="none" stroke="#27333F" marker-start="url(#rulerBar)" marker-mid="url(#rulerBar)" marker-end="url(#rulerBar)"></polyline>
+            </svg>
+            <span class="numbers">
+              <span>0</span>
+              <span>100</span>
+              <span>200</span>
+            </span>
+          </span>
+          <span class="meter"></span>
+        </div>
+      </div>
+      <div id="alertDisplay"></div>
     </div>
-    <div id="alertDisplay"></div>
+    <div id="sideArea">
+      <img id="sideImage" class="side4x3" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="">
+      <input type="file" id="sideImageLoader" class="nodisplay">
+      <label for="sideImageLoader" class="side4x3"></label>
+      <label for="sideText" class="nodisplay">Side Text Area</label>
+      <textarea id="sideText" class="side2x3 noresize"></textarea>
+    </div>
+    <iframe id="chatBox" src="WEB_CHAT_APP_ADDRESS"></iframe>
   </div>
-  <div id="sideArea">
-    <img id="sideImage" class="side4x3" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="">
-    <input type="file" id="sideImageLoader" class="nodisplay">
-    <label for="sideImageLoader" class="side4x3"></label>
-    <label for="sideText" class="nodisplay">Side Text Area</label>
-    <textarea id="sideText" class="side2x3 noresize"></textarea>
-  </div>
-  <iframe id="chatBox" src="WEB_CHAT_APP_ADDRESS"></iframe>
 </div>
 </body>
 
@@ -107,7 +110,7 @@
 <script src="./js/SceneHandler.js"></script>
 <script>
   const sceneHandler = new SceneHandler({
-    backgroundDom: document.getElementById('container'),
+    backgroundDom: document.getElementById('background'),
     eventTarget: document.getElementById('container')
   })
 </script>

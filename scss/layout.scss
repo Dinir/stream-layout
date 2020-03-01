@@ -35,7 +35,15 @@ input, label {
   overflow: hidden;
   
   // for custom background
-  background-image: none;
+  #background {
+    position: fixed;
+    &.rollAlong { position: absolute; }
+    top: 0;
+    z-index: -1;
+    width: $layoutWidth;
+    height: $layoutHeight;
+    background-image: none;
+  }
   
   #layoutFrame {
     width: 100%;
@@ -129,3 +137,18 @@ input, label {
   
 }
 
+/* roll-up effect */
+$roll-transition-time: 800ms;
+
+#roller {
+  position: relative;
+  top: 0;
+  transition:
+    top $roll-transition-time cubic-bezier(0.7, -0.3, 0.54, 1.2) 0s;
+  #background.hiddenOnRoll {
+    position: absolute;
+  }
+}
+#roller.rolling {
+  top: -1 * ( $mainAreaHeight + $lineAreaHeight );
+}
