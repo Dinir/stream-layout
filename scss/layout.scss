@@ -95,6 +95,7 @@ input, label {
     height: $mainAreaHeight;
   }
   &.vert #interactiveOptions {
+    top: 0;
     left: 248px;
     width: 304px;
     height: $lineAreaHeight + $mainAreaHeight;
@@ -148,7 +149,10 @@ $roll-transition-time: 800ms;
   #background.hiddenOnRoll {
     position: absolute;
   }
-}
-#roller.rolling {
-  top: -1 * ( $mainAreaHeight + $lineAreaHeight );
+  &[data-roll='up'] {
+    top: -1 * ( $mainAreaHeight + $lineAreaHeight );
+  }
+  &[data-roll='down'] {
+    top: 0;
+  }
 }

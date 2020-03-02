@@ -1,5 +1,4 @@
 #interactiveOptions {
-  opacity: 0;
   transition: opacity 0.2s; }
   #interactiveOptions:hover {
     opacity: 1; }

@@ -76,6 +76,7 @@ input, label {
   height: 360px; }
 
 #container.vert #interactiveOptions {
+  top: 0;
   left: 248px;
   width: 304px;
   height: 405px; }
@@ -118,8 +119,9 @@ input, label {
   transition: top 800ms cubic-bezier(0.7, -0.3, 0.54, 1.2) 0s; }
   #roller #background.hiddenOnRoll {
     position: absolute; }
-
-#roller.rolling {
-  top: -405px; }
+  #roller[data-roll='up'] {
+    top: -405px; }
+  #roller[data-roll='down'] {
+    top: 0; }
 
 /*# sourceMappingURL=layout.css.map */

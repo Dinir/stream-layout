@@ -59,6 +59,11 @@
           <span class="meter"></span>
         </div>
       </div>
+      <div id="debug" style="position: fixed;right: 0;top: 0;">
+        <label>Roll Data State</label>
+        <div>Query / Storage / DOM</div>
+        <div id="debugRoll"></div>
+      </div>
       <div id="alertDisplay"></div>
     </div>
     <div id="sideArea">
@@ -76,11 +81,77 @@
 <script src="./js/getQueryVariable.js"></script>
 <script>
   const layoutContainer = document.getElementById('container')
-  const sceneType = getQueryVariable('scene') ||
-                    window.localStorage.getItem('sceneType') ||
-                    'hori'
-  window.localStorage.setItem('sceneType', sceneType)
-  layoutContainer.setAttribute('class', sceneType)
+  const layoutRoller = document.getElementById('roller')
+  const updateSceneType = () => {
+    const sceneType = getQueryVariable('scene') ||
+                      window.localStorage.getItem('sceneType') ||
+                      'hori'
+    window.localStorage.setItem('sceneType', sceneType)
+    layoutContainer.setAttribute('class', sceneType)
+  }
+  updateSceneType()
+  layoutRoller.dataset.roll = getQueryVariable('roll') || 'down'
+  
+  const rollOnSceneChange = (rollerDom => {
+    /*
+    query of 'roll' === currentState (down,down;up,up)
+      - do nothing
+    query of 'roll' !== currentState (up,down;down,up)
+      - set roller and currentState to queryState
+    currentState is not defined (down,null;up,null)
+      - set roller and currentState to queryState
+    */
+    const targetState = getQueryVariable('roll') || 'down'
+    
+    const rollScene = direction => {
+      if (
+        !direction ||
+        (direction !== 'up' && direction !== 'down')
+      ) {
+        const beforeRollState = rollerDom.dataset.roll
+        const afterRollState = beforeRollState === 'up' ? 'down' : 'up'
+        rollerDom.dataset.roll = afterRollState
+        window.localStorage.setItem('rollState', afterRollState)
+      }
+      
+      const directionCase = {
+        up: ['down', 'up'],
+        down: ['up', 'down']
+      }
+      rollerDom.style.transition = 'unset'
+      rollerDom.dataset.roll = directionCase[direction][0]
+      setTimeout(() => {
+        rollerDom.style.transition = ''
+        rollerDom.dataset.roll = directionCase[direction][1]
+        window.localStorage.setItem('rollState', directionCase[direction][1])
+      }, 5)
+    }
+    
+    return () => {
+      const fuck = document.getElementById('debugRoll')
+      fuck.innerHTML = `SCENE TYPE IS ${window.localStorage.getItem('sceneType')} IT SHOULD BE ${layoutContainer.getAttribute('class')}<br>`
+      fuck.innerHTML += `${window.localStorage.getItem('rollState')} ${rollerDom.dataset.roll}<br>`
+      
+      let currentState = window.localStorage.getItem('rollState')
+      if (targetState === currentState &&
+          targetState === rollerDom.dataset.roll) {
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;OBSCANSUCKMYDICKSOHARDANDSOSKILLFUL;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      } else if (targetState !== currentState) {
+        rollScene(targetState)
+      } else if (currentState !== rollerDom.dataset.roll) {
+        rollerDom.style.transition = 'unset'
+        rollerDom.dataset.roll = currentState
+        setTimeout(() => {
+          rollerDom.style.transition = ''
+        }, 5)
+      }
+      
+      // currentState = rollerDom.dataset.roll
+      // window.localStorage.setItem('rollState', rollerDom.dataset.roll)
+      
+      setTimeout(() => { fuck.innerHTML += `${window.localStorage.getItem('rollState')} ${rollerDom.dataset.roll}<br>` }, 100)
+    }
+  })(layoutRoller)
 </script>
 
 <script src="./js/DomVuShaker.js"></script>
@@ -153,7 +224,17 @@
     'updateInterval': 250
   }
   const currentTime = new CurrentTimeDisplay(...Object.values(clockSettings))
-  currentTime.autoUpdate()
+  // currentTime.autoUpdate()
+</script>
+
+<script>
+  window.addEventListener('obsSceneChanged', () => {
+    updateSceneType()
+    rollOnSceneChange()
+    sceneHandler.loadBackground()
+    textFocusCycler.loadInputs()
+    renderer.temporarilyRetrieveSideImage()
+  })
 </script>
 
 </html>
