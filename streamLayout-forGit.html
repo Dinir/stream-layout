@@ -59,11 +59,11 @@
           <span class="meter"></span>
         </div>
       </div>
-      <div id="debug" style="position: fixed;right: 0;top: 0;">
+      <!--<div id="debug" style="position: fixed;right: 0;top: 0;">
         <label>Roll Data State</label>
         <div>Query / Storage / DOM</div>
         <div id="debugRoll"></div>
-      </div>
+      </div>-->
       <div id="alertDisplay"></div>
     </div>
     <div id="sideArea">
@@ -92,15 +92,15 @@
   updateSceneType()
   layoutRoller.dataset.roll = getQueryVariable('roll') || 'down'
   
-  const rollOnSceneChange = (rollerDom => {
-    /*
+  /*const rollOnSceneChange = (rollerDom => {
+    /!*
     query of 'roll' === currentState (down,down;up,up)
       - do nothing
     query of 'roll' !== currentState (up,down;down,up)
       - set roller and currentState to queryState
     currentState is not defined (down,null;up,null)
       - set roller and currentState to queryState
-    */
+    *!/
     const targetState = getQueryVariable('roll') || 'down'
     
     const rollScene = direction => {
@@ -113,7 +113,7 @@
         rollerDom.dataset.roll = afterRollState
         window.localStorage.setItem('rollState', afterRollState)
       }
-      
+    
       const directionCase = {
         up: ['down', 'up'],
         down: ['up', 'down']
@@ -135,7 +135,7 @@
       let currentState = window.localStorage.getItem('rollState')
       if (targetState === currentState &&
           targetState === rollerDom.dataset.roll) {
-        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;OBSCANSUCKMYDICKSOHARDANDSOSKILLFUL;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       } else if (targetState !== currentState) {
         rollScene(targetState)
       } else if (currentState !== rollerDom.dataset.roll) {
@@ -145,13 +145,13 @@
           rollerDom.style.transition = ''
         }, 5)
       }
-      
+  
       // currentState = rollerDom.dataset.roll
       // window.localStorage.setItem('rollState', rollerDom.dataset.roll)
       
       setTimeout(() => { fuck.innerHTML += `${window.localStorage.getItem('rollState')} ${rollerDom.dataset.roll}<br>` }, 100)
     }
-  })(layoutRoller)
+  })(layoutRoller)*/
 </script>
 
 <script src="./js/DomVuShaker.js"></script>
@@ -230,7 +230,7 @@
 <script>
   window.addEventListener('obsSceneChanged', () => {
     updateSceneType()
-    rollOnSceneChange()
+    // rollOnSceneChange()
     sceneHandler.loadBackground()
     textFocusCycler.loadInputs()
     renderer.temporarilyRetrieveSideImage()
