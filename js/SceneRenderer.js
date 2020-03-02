@@ -42,9 +42,7 @@ class SceneRenderer {
   
   temporarilyRetrieveSideImage() {
     const storedImageData = window.localStorage.getItem('tempSideImage')
-    if (storedImageData) {
-      this.dom.sideImage.src = storedImageData
-    }
+      this.dom.sideImage.src = storedImageData || ''
   }
   temporarilyStoreSideImage (imageData) {
     this.dom.sideImage.src = imageData
